@@ -18,36 +18,50 @@ class _HomeCallState extends State<HomeCall> {
     final TextEditingController _controller=TextEditingController();
 
     return Scaffold(
-      body: Center(
-        child: Column(
-          children: [
-            TextField(
-              controller: _controller,
-            ),
-      
-            SizedBox(height: 10,),
-      
-            InkWell(
-              onTap: () async {
-                await [Permission.camera,Permission.microphone].request().then((value) => {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> Call(channelName: _controller.text.trim())))
-                });
-                
-              },
-      
-              child: Container(
-                width: 300,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Colors.purple,
-                  borderRadius: BorderRadius.circular(15)
+      appBar: AppBar(
+        title: const Text("Join meeting",style: TextStyle(color: Colors.white),),
+        centerTitle: true,
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Center(
+            child: Container(
+              width: 350,
+              height: 50,
+              child: TextField(
+                controller: _controller,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter channel name',
                 ),
-      
-                child: const Text("Join vdeo call" , style: TextStyle(fontSize: 20,color: Colors.white),),
               ),
-            )
-          ],
-        ),
+            ),
+          ),
+      
+          SizedBox(height: 10,),
+      
+          InkWell(
+            onTap: () async {
+              await [Permission.camera,Permission.microphone].request().then((value) => {
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> Call(channelName: _controller.text.trim())))
+              });
+              
+            },
+      
+            child: Container(
+              width: 300,
+              height: 50,
+              decoration: BoxDecoration(
+                color: Colors.purple,
+                borderRadius: BorderRadius.circular(15)
+              ),
+      
+              child:  const Center(child: Text("Join video call" , style: TextStyle(fontSize: 20,color: Colors.white),)),
+            ),
+          )
+        ],
       ),
     );
   }
